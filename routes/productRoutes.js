@@ -5,8 +5,10 @@ const router = express.Router();
 
 router
     .route('/')
-    .get(
-        productController.getAllItems
-    );
+    .get(productController.getAllItems);
+
+router
+    .route('/:id')
+    .get(productController.getOneItem)
 
 module.exports = router;

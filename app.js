@@ -57,7 +57,7 @@ app.use(
 );
 
 // 3) Routes
-app.use('/', productRouter);
+app.use('/products', productRouter);
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
