@@ -10,7 +10,7 @@ const subcategorySchema = new mongoose.Schema(
             unique: true,
             trim: true
         },
-        category: Array
+        category: Object
     }
 )
 
