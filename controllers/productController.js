@@ -1,11 +1,12 @@
 const catchAsynch = require('../utils/catchAsynch');
 const axios = require("axios");
 const dotenv = require("dotenv");
+const Product = require("../models/productModel");
 
 dotenv.config({ path: './config.env' });
 
 
-exports.getAllItems = catchAsynch(async (req, res, _next) => {
+exports.getAllProducts = catchAsynch(async (req, res, _next) => {
     const headers = {
         'x-auth-token': process.env.storeino_token,
     }
@@ -39,7 +40,7 @@ exports.getAllItems = catchAsynch(async (req, res, _next) => {
     });
 });
 
-exports.getOneItem = catchAsynch(async (req, res, _next) => {
+exports.getOneProduct = catchAsynch(async (req, res, _next) => {
     const headers = {
         'x-auth-token': process.env.storeino_token,
     }
@@ -71,6 +72,17 @@ exports.getOneItem = catchAsynch(async (req, res, _next) => {
         status: 'success',
         data: {
             products: items,
+        },
+    });
+});
+
+exports.createProduct  = catchAsynch(async (req, res, _next) => {
+    const product = await Product.create(req.body);
+
+    res.status(201).json({
+        status: 'success',
+        data: {
+            product,
         },
     });
 });

@@ -5,10 +5,12 @@ const router = express.Router();
 
 router
     .route('/')
-    .get(productController.getAllItems);
+    .get(productController.getAllProducts)
+    .post(productController.createProduct)
+;
 
 router
     .route('/:id')
-    .get(productController.getOneItem)
+    .get(productController.getOneProduct)
 
 module.exports = router;
