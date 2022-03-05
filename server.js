@@ -31,10 +31,11 @@ const server = app.listen(port, () => {
 });
 
 
-//LISTENER FOR UNHANDLED PROMISE REJECTION ( asynch code )
+//LISTENER FOR UNHANDLED PROMISE REJECTION ( Asynchronous code )
 process.on('unhandledRejection', (err) => {
     console.log(err.name, err.message);
     console.log('UNHANDLED REJECTION! Shutting down...');
+
     //give the server time to finish processing request then exist
     server.close(() => {
         process.exit(1);
