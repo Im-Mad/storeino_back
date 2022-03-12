@@ -5,11 +5,11 @@ const Product = require("../models/productModel");
 
 dotenv.config({ path: './config.env' });
 
+const headers = {
+    'x-auth-token': process.env.storeino_token,
+}
 
 exports.getAllProducts = catchAsynch(async (req, res, _next) => {
-    const headers = {
-        'x-auth-token': process.env.storeino_token,
-    }
 
     const response = await axios.get('https://api-stores.storeino.com/api/products/search?', {
         headers,
@@ -83,6 +83,32 @@ exports.createProduct  = catchAsynch(async (req, res, _next) => {
         status: 'success',
         data: {
             product,
+        },
+    });
+});
+
+exports.productInCategory = catchAsynch(async (req, res, _next) => {
+    const category = req.params.category;
+    const regex = '^'+category+":";
+    const products = await Product.find({ "subcategories.slug": { $regex: regex } });
+
+    let request = "https://api-stores.storeino.com/api/products/search?";
+
+    products.forEach(product =>
+        request = request + "_id-in[]=" + product._id + "&");
+
+    console.log(request);
+
+    const response = await axios.get(request, {
+        headers,
+    });
+
+    const products2 = response.data;
+
+    res.status(201).json({
+        status: 'success',
+        data: {
+            products2,
         },
     });
 });

@@ -1,15 +1,20 @@
 const express = require('express');
 const categoryController = require('../controllers/categoryController');
+const productController = require('../controllers/productController');
+
 
 const router = express.Router();
+
+
+router
+    .route('/:category')
+    .get(productController.productInCategory);
 
 router
     .route('/')
     .get(categoryController.getAllCategories)
     .post(categoryController.createCategory);
 
-router
-    .route('/:name')
-    .get(categoryController.getCategorie);
+
 
 module.exports = router;

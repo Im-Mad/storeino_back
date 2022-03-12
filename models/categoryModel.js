@@ -6,8 +6,16 @@ const categorySchema = new mongoose.Schema(
             type: String,
             required: [true, 'A category must have a name'],
             unique: true,
-            trim: true
+            trim: true,
+            lowercase: true,
         },
+        subcategories: {
+            type: Array,
+            default: [],
+        }
+    },
+    {
+        versionKey: false
     }
 )
 

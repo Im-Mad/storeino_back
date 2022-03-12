@@ -1,23 +1,32 @@
 const mongoose = require('mongoose');
 const Category = require('./categoryModel');
 const AppError = require('../utils/AppError');
+const slugify = require("slugify");
 
 const subcategorySchema = new mongoose.Schema(
     {
         name: {
             type: String,
             required: [true, 'A category must have a name'],
-            unique: true,
             trim: true
         },
+        slug: {
+            type: String,
+        },
         category: Object
+    },
+    {
+        versionKey: false
     }
 )
 
 // DOCUMENT MIDDLEWARE
 subcategorySchema.pre('save', async function(next) {
-    const category = await Category.findOne({ name: this.category });
-    if(!category) return next(new AppError('No such category',404));
+    this.slug = slugify(this.category+":"+this.name, { lower: true });
+    const filter = { name: this.category, 'subcategories.slug' : { $ne : this.slug }};
+    const update = {$addToSet: {subcategories: {slug: this.slug, name: this.name}}};
+    const category = await Category.findOneAndUpdate(filter,update).select(['-__v','-subcategories']);
+    if(!category) return next(new AppError('No such category or subcategory already existing ',404));
     this.category = category;
     next();
 })
