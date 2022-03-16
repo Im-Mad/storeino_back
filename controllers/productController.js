@@ -3,6 +3,8 @@ const axios = require("axios");
 const dotenv = require("dotenv");
 const Product = require("../models/productModel");
 
+const MergeList = require("../utils/MergeList");
+
 dotenv.config({ path: './config.env' });
 
 const headers = {
@@ -97,18 +99,22 @@ exports.productInCategory = catchAsynch(async (req, res, _next) => {
     products.forEach(product =>
         request = request + "_id-in[]=" + product._id + "&");
 
-    console.log(request);
+    // console.log(products);
 
     const response = await axios.get(request, {
         headers,
     });
 
-    const products2 = response.data;
+    // console.log(response.data.results);
+
+    const baseProduct = response.data.results;
+
+    const mergedList = MergeList(baseProduct,products);
 
     res.status(201).json({
         status: 'success',
         data: {
-            products2,
+            mergedList,
         },
     });
 });
