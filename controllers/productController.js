@@ -1,82 +1,9 @@
-const catchAsynch = require('../utils/catchAsynch');
-const axios = require("axios");
-const dotenv = require("dotenv");
 const Product = require("../models/productModel");
-
+const catchAsynch = require('../utils/catchAsynch');
 const MergeList = require("../utils/MergeList");
-
-dotenv.config({ path: './config.env' });
-
-const headers = {
-    'x-auth-token': process.env.storeino_token,
-}
-
-exports.getAllProducts = catchAsynch(async (req, res, _next) => {
-
-    const response = await axios.get('https://api-stores.storeino.com/api/products/search?', {
-        headers,
-    });
-
-    let items = [];
-
-    response.data.results.forEach(item => items.push({
-        itemId: item._id,
-        name: item.name,
-        type: item.type,
-        price: item.price,
-        outStock: item.outStock,
-        description: item.html,
-        seo: item.seo,
-        options: item.options,
-        variants: item.variants,
-        images: item.images,
-        storeId: item.storeId,
-    }
-    ));
-
-    res.status(200).json({
-        status: 'success',
-        data: {
-            products: items,
-        },
-    });
-});
-
-exports.getOneProduct = catchAsynch(async (req, res, _next) => {
-    const headers = {
-        'x-auth-token': process.env.storeino_token,
-    }
-
-    console.log(req.params.id);
-
-    const response = await axios.get('https://api-stores.storeino.com/api/products/search?', {
-        headers,
-    });
-
-    let items = [];
-
-    response.data.results.forEach(item => items.push({
-            itemId: item._id,
-            name: item.name,
-            type: item.type,
-            price: item.price,
-            outStock: item.outStock,
-            description: item.html,
-            seo: item.seo,
-            options: item.options,
-            variants: item.variants,
-            images: item.images,
-            storeId: item.storeId,
-        }
-    ));
-
-    res.status(200).json({
-        status: 'success',
-        data: {
-            products: items,
-        },
-    });
-});
+const AppError = require("../utils/AppError");
+const FilterManager = require("../utils/FilterManager");
+const StoreinoAPI = require("../utils/StoreinoAPI");
 
 exports.createProduct  = catchAsynch(async (req, res, _next) => {
     const product = await Product.create(req.body);
@@ -89,25 +16,48 @@ exports.createProduct  = catchAsynch(async (req, res, _next) => {
     });
 });
 
-exports.productInCategory = catchAsynch(async (req, res, _next) => {
-    const category = req.params.category;
-    const regex = '^'+category+":";
-    const products = await Product.find({ "subcategories.slug": { $regex: regex } });
+exports.getAllProducts = catchAsynch(async (req, res, _next) => {
 
-    let request = "https://api-stores.storeino.com/api/products/search?";
+    const filterManager = new FilterManager(Product.find(), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+
+    const products = await filterManager.query;
+
+    let query = "";
 
     products.forEach(product =>
-        request = request + "_id-in[]=" + product._id + "&");
+        query = query + "_id-in[]=" + product._id + "&");
 
-    // console.log(products);
+    const baseProduct = await new StoreinoAPI(query).ApiCall();
 
-    const response = await axios.get(request, {
-        headers,
+    const mergedList = MergeList(baseProduct,products);
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            products: mergedList,
+        }
     });
+});
 
-    // console.log(response.data.results);
+exports.productInCategory = catchAsynch(async (req, res, next) => {
+    const category = req.params.category;
+    const regex = '^'+category+":";
+    const products = await Product.find({ "categories.slug": { $regex: regex } } );
 
-    const baseProduct = response.data.results;
+    if(products.length === 0) {
+        return next(new AppError("No product found",404));
+    }
+
+    let query = "";
+
+    products.forEach(product =>
+        query = query + "_id-in[]=" + product._id + "&");
+
+    const baseProduct = await new StoreinoAPI(query).ApiCall();
 
     const mergedList = MergeList(baseProduct,products);
 
