@@ -37,6 +37,7 @@ exports.getAllProducts = catchAsynch(async (req, res, _next) => {
 
     res.status(200).json({
         status: 'success',
+        length: mergedList.length,
         data: {
             products: mergedList,
         }

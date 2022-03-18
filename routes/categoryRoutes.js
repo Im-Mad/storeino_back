@@ -8,7 +8,8 @@ const router = express.Router();
 
 router
     .route('/:category')
-    .get(productController.productInCategory);
+    .get(productController.productInCategory)
+    .delete(categoryController.deleteCategory);
 
 router
     .route('/')

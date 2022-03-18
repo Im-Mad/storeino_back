@@ -9,8 +9,4 @@ router
     .post(productController.createProduct)
 ;
 
-router
-    .route('/:id')
-    .get(productController.getOneProduct)
-
 module.exports = router;
