@@ -4,6 +4,7 @@ const MergeList = require("../utils/MergeList");
 const AppError = require("../utils/AppError");
 const FilterManager = require("../utils/FilterManager");
 const StoreinoAPI = require("../utils/StoreinoAPI");
+const pagination = require("../utils/pagination")
 
 exports.createProduct  = catchAsynch(async (req, res, _next) => {
     const product = await Product.create(req.body);
@@ -16,31 +17,36 @@ exports.createProduct  = catchAsynch(async (req, res, _next) => {
     });
 });
 
-exports.getAllProducts = catchAsynch(async (req, res, _next) => {
+exports.getAllProducts = catchAsynch(async (req, res, next) => {
 
     const filterManager = new FilterManager(Product.find(), req.query)
         .filter()
         .sort()
-        .limitFields()
-        .paginate();
+        .limitFields();
 
     const products = await filterManager.query;
 
-    let query = "";
+    if(products.length === 0) {
+        return next(new AppError("No product found",404));
+    }
 
-    products.forEach(product =>
+    const {productList, paginate } = pagination.paginate(req,products);
+
+    let query = "";
+    productList.forEach(product =>
         query = query + "_id-in[]=" + product._id + "&");
 
     const baseProduct = await new StoreinoAPI(query).ApiCall();
 
-    const mergedList = MergeList(baseProduct,products);
+    const mergedList = MergeList(baseProduct,productList);
 
     res.status(200).json({
         status: 'success',
         length: mergedList.length,
         data: {
             products: mergedList,
-        }
+        },
+        paginate
     });
 });
 
