@@ -16,7 +16,7 @@ const categorySchema = new mongoose.Schema(
         parents: {
             type: Array,
         },
-        childrens: {
+        children: {
             type: Array,
             default: [],
         },
@@ -33,8 +33,8 @@ const categorySchema = new mongoose.Schema(
 categorySchema.pre('save', async function(next) {
     if( this.parents.length > 0 ) {
         this.slug = slugify(this.parents + ":" + this.name, {lower: true});
-        const filter = {slug: this.parents, 'child.slug': { $ne: this.slug }};
-        const update = {$addToSet: { childrens: {slug: this.slug, name: this.name} }};
+        const filter = {slug: this.parents, 'children.slug': { $ne: this.slug }};
+        const update = {$addToSet: { children: {slug: this.slug, name: this.name} }};
         const parent = await Category.findOneAndUpdate(filter, update);
         if (!parent) return next(new AppError('No such parent category', 404));
         this.parents = parent.parents;
@@ -48,7 +48,7 @@ categorySchema.pre('save', async function(next) {
     } else {
         this.slug = slugify(this.name, {lower: true});
         this.parents = [];
-        this.childs = [];
+        this.children = [];
         this.level = 0;
     }
     next();

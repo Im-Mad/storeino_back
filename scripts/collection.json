@@ -1,0 +1,61 @@
+[
+  {
+    "name": "Fashion"
+  },
+  {
+    "name": "Men Fashion",
+    "parents": "fashion"
+  },
+  {
+    "name": "Women Fashion",
+    "parents": "fashion"
+  },
+  {
+    "name": "Pants",
+    "parents": "fashion:women-fashion"
+  },
+  {
+    "name": "Dresses",
+    "parents": "fashion:women-fashion"
+  },
+  {
+    "name": "Suits & Blazers",
+    "parents": "fashion:women-fashion"
+  },
+  {
+    "name": "Body suits",
+    "parents": "fashion:women-fashion"
+  },
+  {
+    "name": "Tanks & Camis",
+    "parents": "fashion:women-fashion"
+  },
+  {
+    "name": "Sweaters",
+    "parents": "fashion:women-fashion"
+  },
+  {
+    "name": "Pants",
+    "parents": "fashion:men-fashion"
+  },
+  {
+    "name": "Dresses",
+    "parents": "fashion:men-fashion"
+  },
+  {
+    "name": "Suits & Blazers",
+    "parents": "fashion:men-fashion"
+  },
+  {
+    "name": "Body suits",
+    "parents": "fashion:men-fashion"
+  },
+  {
+    "name": "Tanks & Camis",
+    "parents": "fashion:men-fashion"
+  },
+  {
+    "name": "Sweaters",
+    "parents": "fashion:men-fashion"
+  }
+]
