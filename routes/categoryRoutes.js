@@ -5,11 +5,18 @@ const productController = require('../controllers/productController');
 
 const router = express.Router();
 
+router
+    .route('/root')
+    .get(categoryController.rootCategories);
 
 router
-    .route('/:category')
-    .get(productController.productInCategory)
+    .route('/:slug')
+    .get(categoryController.getCategory)
     .delete(categoryController.deleteCategory);
+
+router
+    .route('/:slug/products')
+    .get(productController.productInCategory);
 
 router
     .route('/')
