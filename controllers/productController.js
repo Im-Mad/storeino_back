@@ -51,17 +51,24 @@ exports.getAllProducts = catchAsynch(async (req, res, next) => {
 });
 
 exports.productInCategory = catchAsynch(async (req, res, next) => {
-    const category = req.params.category;
-    const regex = '^'+category+":";
-    const products = await Product.find({ "categories.slug": { $regex: regex } } );
+    const category = req.params.slug;
+    const regex = '^'+category;
+
+    const filterManager = new FilterManager(Product.find({ "categories.slug": { $regex: regex } } ), req.query)
+        .filter()
+        .sort()
+        .limitFields();
+
+    const products = await filterManager.query;
 
     if(products.length === 0) {
         return next(new AppError("No product found",404));
     }
 
-    let query = "";
+    const {productList, paginate } = pagination.paginate(req,products);
 
-    products.forEach(product =>
+    let query = "";
+    productList.forEach(product =>
         query = query + "_id-in[]=" + product._id + "&");
 
     const baseProduct = await new StoreinoAPI(query).ApiCall();
@@ -73,5 +80,6 @@ exports.productInCategory = catchAsynch(async (req, res, next) => {
         data: {
             products: mergedList,
         },
+        paginate
     });
 });

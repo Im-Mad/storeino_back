@@ -24,10 +24,22 @@ exports.createCategory = catchAsynch(async (req, res, _next) => {
     });
 });
 
+exports.getCategory = catchAsynch(async (req, res, _next) => {
+    const category = await Category.find({ slug: req.params.slug });
+
+    res.status(201).json({
+        status: 'success',
+        data: {
+            category,
+        },
+    });
+});
+
 exports.deleteCategory = catchAsynch(async (req, res, next) => {
-    const category = await Category.findOne({ slug: req.params.category });
+    const category = await Category.findOne({ slug: req.params.slug });
     if(!category) return next(new AppError("No category found",404));
-    if(category.childrens.length > 0) return next(new AppError("Category has children, cannot delete",404));
+    console.log(category);
+    if(category.children.length > 0) return next(new AppError("Category has children, cannot delete",404));
     await category.delete();
 
     if(category.level > 0) {
@@ -38,5 +50,16 @@ exports.deleteCategory = catchAsynch(async (req, res, next) => {
 
     res.status(202).json({
         status: 'success'
+    });
+});
+
+exports.rootCategories = catchAsynch(async (req, res, _next) => {
+    const categories = await Category.find({ level: 1 });
+
+    res.status(201).json({
+        status: 'success',
+        data: {
+            categories,
+        },
     });
 });
