@@ -17,6 +17,10 @@ const productSchema = new mongoose.Schema(
     }
 )
 
+
+// TODO check if the product exist in the STOREINO DB Before INSERT IT
+
+
 // DOCUMENT MIDDLEWARE
 productSchema.pre('save', async function(next) {
     const categories = await Category.find({slug: this.categories }).select(['slug']);
