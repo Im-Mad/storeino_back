@@ -1,61 +1,49 @@
 [
-  {
-    "name": "Fashion"
-  },
-  {
-    "name": "Men Fashion",
-    "parents": "fashion"
-  },
-  {
-    "name": "Women Fashion",
-    "parents": "fashion"
-  },
-  {
-    "name": "Pants",
-    "parents": "fashion:women-fashion"
-  },
-  {
-    "name": "Dresses",
-    "parents": "fashion:women-fashion"
-  },
-  {
-    "name": "Suits & Blazers",
-    "parents": "fashion:women-fashion"
-  },
-  {
-    "name": "Body suits",
-    "parents": "fashion:women-fashion"
-  },
-  {
-    "name": "Tanks & Camis",
-    "parents": "fashion:women-fashion"
-  },
-  {
-    "name": "Sweaters",
-    "parents": "fashion:women-fashion"
-  },
-  {
-    "name": "Pants",
-    "parents": "fashion:men-fashion"
-  },
-  {
-    "name": "Dresses",
-    "parents": "fashion:men-fashion"
-  },
-  {
-    "name": "Suits & Blazers",
-    "parents": "fashion:men-fashion"
-  },
-  {
-    "name": "Body suits",
-    "parents": "fashion:men-fashion"
-  },
-  {
-    "name": "Tanks & Camis",
-    "parents": "fashion:men-fashion"
-  },
-  {
-    "name": "Sweaters",
-    "parents": "fashion:men-fashion"
-  }
+    {
+        "name": "Fashion"
+    },
+    {
+        "name": "Women Fashion",
+        "parents": "fashion"
+    },
+    {
+        "name": "Men Fashion",
+        "parents": "fashion"
+    },
+    {
+        "name": "Kids Fashion",
+        "parents": "fashion"
+    },
+    {
+        "name": "Bottoms",
+        "parents": "fashion:kids-fashion"
+    },
+    {
+        "name": "Outerwears & Jackets",
+        "parents": "fashion:kids-fashion"
+    },
+    {
+        "name": "Accessories",
+        "parents": "fashion:kids-fashion"
+    },
+    {
+        "name": "Underwears",
+        "parents": "fashion:kids-fashion"
+    },
+    {
+        "name": "Shoes",
+        "parents": "fashion:kids-fashion"
+    },
+    {
+        "name": "Bottoms",
+        "parents": "fashion:men-fashion"
+    },
+    {
+        "name": "Shoes",
+        "parents": "fashion:men-fashion"
+    },
+    {
+        "name": "igjkljlk",
+        "parents": "fashion:men-fashion:bottoms"
+    }
 ]

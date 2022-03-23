@@ -11,7 +11,8 @@ dotenv.config({ path: `${__dirname}/../config.env` });
 const headers = {
     'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZSI6eyJfaWQiOiI2MjAyZmFiNjEyZjJmZDA4MDllZDJmZDAifSwiaWF0IjoxNjQ3NzAxMTU2LCJleHAiOjE2NzkyMzcxNTZ9.GQGMrCDO_N57IIS2g9TUwy1DCipSRc-6oUNb1dJEx3E',
 }
-const query = "https://api-stores.storeino.com/api/collections/search?limit=100";
+const query = "https://api-stores.storeino.com/api/collections/search?limit=100&sort=_id+asc";
+const query2 = "https://api-stores.storeino.com/api/collections/update/?id="
 const writeFile = 'collection.json';
 
 
@@ -68,11 +69,10 @@ const downloadData = async () => {
     const results = response.data.results;
     const findParent = (id) => {
         const parent = results.filter(result => result._id === id);
-        // console.log(parent)
-        return {slug:parent[0].slug, parent: parent[0].parent};
+        return {slug:slugify(parent[0].name, {lower: true}), parent: parent[0].parent};
     }
     const categories = [];
-    response.data.results.forEach(result => {
+    for (const result of response.data.results) {
         const category = {
             name:result.name
         };
@@ -88,12 +88,25 @@ const downloadData = async () => {
             category.parents = foundParent.slug + separator + category.parents;
             parent = foundParent.parent;
         }
-
         categories.push(category);
         console.log(category);
-
-
-    });
+        const query3 = query2+result._id;
+        console.log(query3);
+        // const res = await axios.get(query, { slug: 'world' }, {
+        //     headers: {
+        //         'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZSI6eyJfaWQiOiI2MjAyZmFiNjEyZjJmZDA4MDllZDJmZDAifSwiaWF0IjoxNjQ3NzAxMTU2LCJleHAiOjE2NzkyMzcxNTZ9.GQGMrCDO_N57IIS2g9TUwy1DCipSRc-6oUNb1dJEx3E'
+        //     }
+        // });
+        axios({
+            url: query3,
+            data: {
+                slug: 'haha'
+            },
+            headers: {
+                'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZSI6eyJfaWQiOiI2MjAyZmFiNjEyZjJmZDA4MDllZDJmZDAifSwiaWF0IjoxNjQ3NzAxMTU2LCJleHAiOjE2NzkyMzcxNTZ9.GQGMrCDO_N57IIS2g9TUwy1DCipSRc-6oUNb1dJEx3E'
+            }
+        });
+    }
     const data = JSON.stringify(categories, null, 4);
     await fs.writeFileSync(`${__dirname}/${writeFile}`, data, 'utf-8');
 }
