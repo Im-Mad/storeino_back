@@ -1,8 +1,6 @@
 const catchAsynch = require('../utils/catchAsynch');
 const Category = require('../models/categoryModel');
 const AppError = require("../utils/AppError");
-const categoriesParser = require("../utils/categoriesParser");
-const {stringify} = require("nodemon/lib/utils");
 
 exports.getAllCategories = catchAsynch(async (req, res, _next) => {
     const categories = await Category.find();
