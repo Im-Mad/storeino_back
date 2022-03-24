@@ -21,7 +21,7 @@ mongoose
         useFindAndModify: false,
     })
     .then(() => {
-        console.log('Connected to DB successfully');
+        console.log('Connected eto DB successfully');
     });
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/categories.json`, 'utf-8'));

@@ -15,6 +15,17 @@ const query = "https://api-stores.storeino.com/api/collections/search?limit=100&
 const query2 = "https://api-stores.storeino.com/api/collections/update/?id="
 const writeFile = 'collection.json';
 
+var postData = {
+    slug: "test@test.com",
+};
+
+let axiosConfig = {
+    headers: {
+        'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZSI6eyJfaWQiOiI2MjAyZmFiNjEyZjJmZDA4MDllZDJmZDAiLCJuYW1lIjoicGZhIiwic3ViZG9tYWluIjoicGZhLnN0b3JlaW5vLmNvbSJ9LCJ1c2VyIjp7Il9pZCI6IjYyMDJmYWIxMTJmMmZkMDgwOWVkMmZjNyIsImZpcnN0bmFtZSI6InJhY2hpZCIsImxhc3RuYW1lIjoiZWwgYWlzc2FvdWkiLCJlbWFpbCI6InJhLmVsYWlzc2FvdWlAZ21haWwuY29tIn0sImNvbXBhbnkiOnsic3RhdHVzIjoiVU5DT01QTEVURUQiLCJfaWQiOiI2MjAyZmFiMTEyZjJmZDA4MDllZDJmYzUiLCJuYW1lIjoicGZhIn0sImlhdCI6MTY0ODExNjE2OCwiZXhwIjoxNjc5NjUyMTY4fQ.rv95dzgk-zCFb0e0u00_zT1odjQXMRfi9AGcMcuc_vA',
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": "*",
+    }
+};
 
 const DB = process.env.DATABASE.replace(
     '<PASSWORD>',
@@ -79,7 +90,7 @@ const downloadData = async () => {
         let parent = result.parent
         while (parent) {
             const foundParent = findParent(parent);
-            let separator = ':';
+            let separator = '2';
             if (!category.parents){
                 category.parents = '';
                 separator = '';
@@ -89,23 +100,23 @@ const downloadData = async () => {
             parent = foundParent.parent;
         }
         categories.push(category);
-        console.log(category);
         const query3 = query2+result._id;
-        console.log(query3);
-        // const res = await axios.get(query, { slug: 'world' }, {
-        //     headers: {
-        //         'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZSI6eyJfaWQiOiI2MjAyZmFiNjEyZjJmZDA4MDllZDJmZDAifSwiaWF0IjoxNjQ3NzAxMTU2LCJleHAiOjE2NzkyMzcxNTZ9.GQGMrCDO_N57IIS2g9TUwy1DCipSRc-6oUNb1dJEx3E'
-        //     }
-        // });
-        axios({
-            url: query3,
-            data: {
-                slug: 'haha'
-            },
-            headers: {
-                'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZSI6eyJfaWQiOiI2MjAyZmFiNjEyZjJmZDA4MDllZDJmZDAifSwiaWF0IjoxNjQ3NzAxMTU2LCJleHAiOjE2NzkyMzcxNTZ9.GQGMrCDO_N57IIS2g9TUwy1DCipSRc-6oUNb1dJEx3E'
-            }
-        });
+        if(!category.parents) {
+            postData.slug = slugify(category.name, {lower: true} );
+        } else {
+            postData.slug = category.parents +"2"+slugify(category.name, {lower: true} );
+        }
+
+        console.log(query3)
+        console.log(postData)
+        axios.post(query3, postData, axiosConfig)
+            .then((res) => {
+                console.log("RESPONSE RECEIVED: ", res.data.slug);
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ");
+            })
+
     }
     const data = JSON.stringify(categories, null, 4);
     await fs.writeFileSync(`${__dirname}/${writeFile}`, data, 'utf-8');
