@@ -48,13 +48,17 @@ function dbconnection() {
 }
 
 
-const categories = JSON.parse(fs.readFileSync(`${__dirname}/${writeFile}`, 'utf-8'));
+const categories = JSON.parse(fs.readFileSync(`${__dirname}/collection.json`, 'utf-8'));
 
 const importData = async () => {
     try {
         for(const category of categories) {
+            const par = category.parents+"";
+            if(!!category.parents) {
+                category.parents = par.replace("2", ":");
+            }
             console.log(category);
-            await Category.create(categories[category]);
+            await Category.create(category);
         }
         console.log('Importation successfully');
         process.exit();

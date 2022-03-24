@@ -19,7 +19,7 @@
         "parents": "fashion2kids-fashion"
     },
     {
-        "name": "Outerwears & Jackets",
+        "name": "Outerwears and Jackets",
         "parents": "fashion2kids-fashion"
     },
     {
@@ -41,5 +41,37 @@
     {
         "name": "Shoes",
         "parents": "fashion2men-fashion"
+    },
+    {
+        "name": "Underwears",
+        "parents": "fashion2men-fashion"
+    },
+    {
+        "name": "Accessories",
+        "parents": "fashion2men-fashion"
+    },
+    {
+        "name": "Outerwears and Jackets",
+        "parents": "fashion2men-fashion"
+    },
+    {
+        "name": "Bottoms",
+        "parents": "fashion2women-fashion"
+    },
+    {
+        "name": "Outerwears and Jackets",
+        "parents": "fashion2women-fashion"
+    },
+    {
+        "name": "Accessories",
+        "parents": "fashion2women-fashion"
+    },
+    {
+        "name": "Underwears",
+        "parents": "fashion2women-fashion"
+    },
+    {
+        "name": "Shoes",
+        "parents": "fashion2women-fashion"
     }
 ]
