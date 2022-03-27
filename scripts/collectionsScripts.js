@@ -55,9 +55,8 @@ const importData = async () => {
         for(const category of categories) {
             const par = category.parents+"";
             if(!!category.parents) {
-                category.parents = par.replace("2", ":");
+                category.parents = par.split("2").join(":");
             }
-            console.log(category);
             await Category.create(category);
         }
         console.log('Importation successfully');

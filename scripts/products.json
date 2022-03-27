@@ -1,170 +1,45 @@
 [
     {
+        "_id": "623cb191ab655d0daba44818",
+        "name": "MILANCEL 2022 Summer Kids Clothes Casual Girls Denim Shorts",
+        "categories": [
+            "fashion:kids-fashion:bottoms"
+        ]
+    },
+    {
+        "_id": "623cb0f1ab655d0daba4478a",
+        "name": "Cotton Girls Elastic Waist LOOSE Wide Leg Pants",
+        "categories": [
+            "fashion:kids-fashion:bottoms"
+        ]
+    },
+    {
+        "_id": "623cad78ab655d0daba43cef",
+        "name": "Spring Autumn Winter Plaid Skirt-Pants Leggings For Girls 2-16",
+        "categories": [
+            "fashion:kids-fashion:bottoms"
+        ]
+    },
+    {
         "_id": "623115497053dc0bfeb70c19",
         "name": "FLYBIRD Weight Bench, Adjustable Strength Training Bench for Full Body Workout with Fast Folding-New Version",
         "categories": [
-            "fitness-equipments"
+            "fashion:men-fashion:accessories"
         ]
     },
     {
         "_id": "623114a97053dc0bfeb70a41",
         "name": "FEIERDUN Doorway Pull Up and Chin Up Bar Upper Body Workout Bar with No Screws & Safe Locking Mechanism for Home Gym Exercise Fitness Max Load 440 LBS (Blue, L28.3~36.2\")",
         "categories": [
-            "fitness-equipments"
+            "fashion:women-fashion:accessories"
         ]
     },
     {
         "_id": "6231141a7053dc0bfeb709af",
         "name": "DeskCycle 2 Under Desk Bike Pedal Exerciser with Adjustable Leg - Mini Exercise Bike Desk Cycle, Leg Exerciser for Physical Therapy & Desk Exercise",
         "categories": [
-            "fitness-equipments"
-        ]
-    },
-    {
-        "_id": "6231135b7053dc0bfeb70906",
-        "name": "Gonex Portable Home Gym Workout Equipment with 14 Exercise Accessories Ab Roller Wheel,Elastic Resistance Bands,Push-up Stand,Post Landmine Sleeve and More for Full Body Workouts System",
-        "categories": [
-            "fitness-equipments"
-        ]
-    },
-    {
-        "_id": "623112a67053dc0bfeb70870",
-        "name": "Mc-Core Products McCore Adjustable dumbbell set - 11 22 Lbs dumbbells, weights for home or office use, Portable sets, Soft Grip Weight comfort, dumbbells set,Dumb bells",
-        "categories": [
-            "fitness-equipments"
-        ]
-    },
-    {
-        "_id": "6231116b7053dc0bfeb707a1",
-        "name": "Xbox Series S",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "623111307053dc0bfeb70785",
-        "name": "Xbox Core Wireless Controller – Carbon Black",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "623110d17053dc0bfeb70717",
-        "name": "Oculus Quest 2 — Advanced All-In-One Virtual Reality Headset — 256 GB",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230fd897053dc0bfeb6e56d",
-        "name": "Epson FastFoto FF-680W Wireless High-Speed Photo and Document Scanning System, Black",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230fd4d7053dc0bfeb6e526",
-        "name": "Epson FastFoto FF-680W Wireless High-Speed Photo and Document Scanning System, Black",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230fcf57053dc0bfeb6e4ed",
-        "name": "Fujitsu ScanSnap iX1600 Versatile Cloud Enabled Document Scanner for Mac or PC, Black",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230fc717053dc0bfeb6e46c",
-        "name": "Samsung Tab A7 Lite 8.7\" Gray 32GB (SM-T220NZAAXAR)",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230fc1f7053dc0bfeb6e3fe",
-        "name": "Lenovo Flex 5 Laptop, 14.0\" FHD Touch Display, AMD Ryzen 5 5500U, 16GB RAM, 256GB Storage, AMD Radeon Graphics, Windows 11 Home",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230fbf67053dc0bfeb6e3bf",
-        "name": "Lenovo IdeaPad 3 11 Chromebook Laptop, 11.6\" HD Display, Intel Celeron N4020, 4GB RAM, 64GB Storage, Intel UHD Graphics 600, Chrome OS",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230fbc07053dc0bfeb6e37d",
-        "name": "Acer Aspire 5 A515-46-R3UB | 15.6\" Full HD IPS Display | AMD Ryzen 3 3350U Quad-Core Mobile Processor | 4GB DDR4 | 128GB NVMe SSD | WiFi 6 | Backlit KB | FPR | Amazon Alexa | Windows 11 Home in S mode",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230fb4d7053dc0bfeb6e316",
-        "name": "Samsung 980 PRO SSD 2TB PCIe NVMe Gen 4 Gaming M.2 Internal Solid State Hard Drive Memory Card, Maximum Speed, Thermal Control, MZ-V8P2T0B",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230faa27053dc0bfeb6e275",
-        "name": "Samsung 980 PRO SSD 2TB PCIe NVMe Gen 4 Gaming M.2 Internal Solid State Hard Drive Memory Card, Maximum Speed, Thermal Control, MZ-V8P2T0B",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230fa2c7053dc0bfeb6e200",
-        "name": "SAMSUNG 980 SSD 1TB M.2 NVMe Interface Internal Solid State Drive with V-NAND Technology for Gaming, Heavy Graphics, Full Power Mode, MZ-V8V1T0B/AM",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "6230f9fc7053dc0bfeb6e1e2",
-        "name": "Samsung 980 PRO SSD 2TB PCIe NVMe Gen 4 Gaming M.2 Internal Solid State Hard Drive Memory Card, Maximum Speed, Thermal Control, MZ-V8P2T0B",
-        "categories": [
-            "computers-and-peripherals"
-        ]
-    },
-    {
-        "_id": "622a7045fd99c80a95a8df80",
-        "name": "White Cobbless Classy T-Shirt",
-        "categories": [
-           "t-shirts"e
-        ]
-    },
-    {
-        "_id": "622a7041fd99c80a95a8df5b",
-        "name": "White T-Shirt Z Event 2020",
-        "categories": [
-            "t-shirts"
-        ]
-    },
-    {
-        "_id": "622a703dfd99c80a95a8df32",
-        "name": "White T-Shirt Leave the road",
-        "categories": [
-            "women-t-shirts"
-        ]
-    },
-    {
-        "_id": "622a7011fd99c80a95a8df02",
-        "name": "Orange Sneakers",
-        "categories": [
-            "sneakers"
-        ]
-    },
-    {
-        "_id": "622a700dfd99c80a95a8defc",
-        "name": "KSwiss Sneakers",
-        "categories": [
-            "sneakers"
+            "fashion:men-fashion:accessories",
+            "fashion:women-fashion:accessories"
         ]
     }
 ]
