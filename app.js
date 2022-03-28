@@ -2,15 +2,17 @@ const express = require('express');
 const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const morgan = require("morgan");
 //const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
-const hpp = require('hpp');
+// const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
 const productRouter = require('./routes/productRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
+
 
 dotenv.config({ path: './config.env' });
 
@@ -22,6 +24,9 @@ const app = express();
 
 //Set security HTTP
 app.use(helmet());
+
+// dev mode
+app.use(morgan('dev'));
 
 // Allow access control allow origin
 app.use(function (req, res, next) {
@@ -64,18 +69,18 @@ app.use(cookieParser());
 app.use(xss());
 
 // Prevent parameter pollution
-app.use(
-    hpp({
-        whitelist: [
-            'duration',
-            'ratingQuantity',
-            'ratingAverage',
-            'maxGroupSize',
-            'difficulty',
-            'price',
-        ],
-    })
-);
+// app.use(
+//     hpp({
+//         whitelist: [
+//             'duration',
+//             'ratingQuantity',
+//             'ratingAverage',
+//             'maxGroupSize',
+//             'difficulty',
+//             'price',
+//         ],
+//     })
+// );
 
 
 // 3) Routes

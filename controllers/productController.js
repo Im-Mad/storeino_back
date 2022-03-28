@@ -76,10 +76,7 @@ exports.productInCategory = catchAsynch(async (req, res, next) => {
     const mergedList = MergeList(baseProduct,products);
 
     res.status(200).json({
-        status: 'success',
-        data: {
-            products: mergedList,
-        },
+        result:  mergedList,
         paginate
     });
 });
