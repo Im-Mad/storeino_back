@@ -2,12 +2,6 @@ const mongoose = require('mongoose');
 const AppError = require("../utils/AppError");
 const Category = require("./categoryModel");
 
-const slugReg = (slugs) => {
-    const regs = [];
-    slugs.forEach(slug => regs.push(new RegExp('([^ ]*:)*' + slug + '$','gi')));
-    return regs;
-}
-
 const productSchema = new mongoose.Schema(
     {
         _id: {
@@ -32,12 +26,10 @@ const productSchema = new mongoose.Schema(
 
 // DOCUMENT MIDDLEWARE
 productSchema.pre('save', async function(next) {
-
-        const categories = await Category.find({slug: {$in: slugReg(this.categories)} }).select(['slug']);
+        const categories = await Category.find({slug: {$in: this.categories} }).select(['--v','-children','-_id']);
         if(categories.length === 0) return next(new AppError("A product must have at least one valid subcategory",404));
         this.categories = categories;
         next();
-
 });
 
 const Product = mongoose.model('Product', productSchema);

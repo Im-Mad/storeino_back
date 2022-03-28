@@ -42,7 +42,10 @@ const downloadData = async () => {
     const products = [];
     response.data.results.forEach(result => {
         const product = {_id: result._id, name: result.name, categories: []};
-        result.collections.map( collection => product.categories.push(collection.slug));
+        result.collections.map( collection => {
+            const slug = collection.slug.split("2").join(":");
+            product.categories.push(slug);
+        });
         products.push(product);
     });
     const data = JSON.stringify(products, null, 4);

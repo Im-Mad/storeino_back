@@ -17,10 +17,7 @@ exports.createCategory = catchAsynch(async (req, res, _next) => {
     const category = await Category.create(req.body);
 
     res.status(201).json({
-        status: 'success',
-        data: {
-            category,
-        },
+        result: category,
     });
 });
 
@@ -28,10 +25,7 @@ exports.getCategory = catchAsynch(async (req, res, _next) => {
     const category = await Category.find({ slug: req.params.slug });
 
     res.status(201).json({
-        status: 'success',
-        data: {
-            category,
-        },
+        result: category,
     });
 });
 

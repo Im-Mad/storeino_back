@@ -2,15 +2,17 @@ const express = require('express');
 const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
+const morgan = require("morgan");
 //const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
-const hpp = require('hpp');
+// const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
 const productRouter = require('./routes/productRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
+
 
 dotenv.config({ path: './config.env' });
 
@@ -22,6 +24,29 @@ const app = express();
 
 //Set security HTTP
 app.use(helmet());
+
+// dev mode
+app.use(morgan('dev'));
+
+// Allow access control allow origin
+app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4002');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
 
 // Limit request from same IP
 const limiter = rateLimit({
@@ -44,18 +69,18 @@ app.use(cookieParser());
 app.use(xss());
 
 // Prevent parameter pollution
-app.use(
-    hpp({
-        whitelist: [
-            'duration',
-            'ratingQuantity',
-            'ratingAverage',
-            'maxGroupSize',
-            'difficulty',
-            'price',
-        ],
-    })
-);
+// app.use(
+//     hpp({
+//         whitelist: [
+//             'duration',
+//             'ratingQuantity',
+//             'ratingAverage',
+//             'maxGroupSize',
+//             'difficulty',
+//             'price',
+//         ],
+//     })
+// );
 
 
 // 3) Routes
