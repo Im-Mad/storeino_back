@@ -35,16 +35,14 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
     let productsIds = [];
     productList.forEach(product => productsIds.push(product._id));
 
-    const baseProduct = await Api.get('products','search',  { '_id-in':productsIds});
+    const response = await Api.get('products','search',  { '_id-in':productsIds});
+
+    const baseProduct = response.data.results;
 
     const mergedList = MergeList(baseProduct,productList);
 
     res.status(200).json({
-        status: 'success',
-        length: mergedList.length,
-        data: {
-            products: mergedList,
-        },
+        result: mergedList,
         paginate
     });
 });
@@ -69,7 +67,9 @@ exports.productInCategory = catchAsync(async (req, res, next) => {
     let productsIds = [];
     productList.forEach(product => productsIds.push(product._id));
 
-    const baseProduct = await new Api.get('products', 'search', { '_id-in': productsIds});
+    const response = await Api.get('products', 'search', { '_id-in': productsIds});
+
+    const baseProduct = response.data.results;
 
     const mergedList = MergeList(baseProduct,products);
 
