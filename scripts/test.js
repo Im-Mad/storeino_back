@@ -1,4 +1,7 @@
 const axios = require("axios");
+const Api = require("../utils/StoreinoAPI");
+const catchAsync = require("../utils/catchAsynch");
+
 
 
 // const headers = {
@@ -13,22 +16,32 @@ const axios = require("axios");
 //     console.log(res);
 // }
 
-var postData = {
-    slug: "test@test.com",
-};
+// var postData = {
+//     slug: "test@test.com",
+// };
+//
+// let axiosConfig = {
+//     headers: {
+//         'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZSI6eyJfaWQiOiI2MjAyZmFiNjEyZjJmZDA4MDllZDJmZDAiLCJuYW1lIjoicGZhIiwic3ViZG9tYWluIjoicGZhLnN0b3JlaW5vLmNvbSJ9LCJ1c2VyIjp7Il9pZCI6IjYyMDJmYWIxMTJmMmZkMDgwOWVkMmZjNyIsImZpcnN0bmFtZSI6InJhY2hpZCIsImxhc3RuYW1lIjoiZWwgYWlzc2FvdWkiLCJlbWFpbCI6InJhLmVsYWlzc2FvdWlAZ21haWwuY29tIn0sImNvbXBhbnkiOnsic3RhdHVzIjoiVU5DT01QTEVURUQiLCJfaWQiOiI2MjAyZmFiMTEyZjJmZDA4MDllZDJmYzUiLCJuYW1lIjoicGZhIn0sImlhdCI6MTY0ODExNjE2OCwiZXhwIjoxNjc5NjUyMTY4fQ.rv95dzgk-zCFb0e0u00_zT1odjQXMRfi9AGcMcuc_vA',
+//         'Content-Type': 'application/json;charset=UTF-8',
+//         "Access-Control-Allow-Origin": "*",
+//     }
+// };
+//
+// axios.post('https://api-stores.storeino.com/api/collections/update/?id=623b8998757cff0d8a85cae1', postData, axiosConfig)
+//     .then((res) => {
+//         console.log("RESPONSE RECEIVED: ", res);
+//     })
+//     .catch((err) => {
+//         console.log("AXIOS ERROR: ", err);
+//     })
+const start = async () => {
+    const params = {
+        '_id-in':["623cb191ab655d0daba44818"],
+    };
+    // console.log(Mixin.paramsSerializer(idIn))
+    const baseProduct =  await Api.get('products', 'search', params);
+    console.log(baseProduct.data);
+}
 
-let axiosConfig = {
-    headers: {
-        'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdG9yZSI6eyJfaWQiOiI2MjAyZmFiNjEyZjJmZDA4MDllZDJmZDAiLCJuYW1lIjoicGZhIiwic3ViZG9tYWluIjoicGZhLnN0b3JlaW5vLmNvbSJ9LCJ1c2VyIjp7Il9pZCI6IjYyMDJmYWIxMTJmMmZkMDgwOWVkMmZjNyIsImZpcnN0bmFtZSI6InJhY2hpZCIsImxhc3RuYW1lIjoiZWwgYWlzc2FvdWkiLCJlbWFpbCI6InJhLmVsYWlzc2FvdWlAZ21haWwuY29tIn0sImNvbXBhbnkiOnsic3RhdHVzIjoiVU5DT01QTEVURUQiLCJfaWQiOiI2MjAyZmFiMTEyZjJmZDA4MDllZDJmYzUiLCJuYW1lIjoicGZhIn0sImlhdCI6MTY0ODExNjE2OCwiZXhwIjoxNjc5NjUyMTY4fQ.rv95dzgk-zCFb0e0u00_zT1odjQXMRfi9AGcMcuc_vA',
-        'Content-Type': 'application/json;charset=UTF-8',
-        "Access-Control-Allow-Origin": "*",
-    }
-};
-
-axios.post('https://api-stores.storeino.com/api/collections/update/?id=623b8998757cff0d8a85cae1', postData, axiosConfig)
-    .then((res) => {
-        console.log("RESPONSE RECEIVED: ", res);
-    })
-    .catch((err) => {
-        console.log("AXIOS ERROR: ", err);
-    })
+start().catch(err => console.log(err.message));

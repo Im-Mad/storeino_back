@@ -1,12 +1,12 @@
 const Product = require("../models/productModel");
-const catchAsynch = require('../utils/catchAsynch');
+const catchAsync = require('../utils/catchAsynch');
 const MergeList = require("../utils/MergeList");
 const AppError = require("../utils/AppError");
 const FilterManager = require("../utils/FilterManager");
-const StoreinoAPI = require("../utils/StoreinoAPI");
+const Api = require("../utils/StoreinoAPI");
 const pagination = require("../utils/pagination")
 
-exports.createProduct  = catchAsynch(async (req, res, _next) => {
+exports.createProduct  = catchAsync(async (req, res, _next) => {
     const product = await Product.create(req.body);
 
     res.status(201).json({
@@ -17,7 +17,7 @@ exports.createProduct  = catchAsynch(async (req, res, _next) => {
     });
 });
 
-exports.getAllProducts = catchAsynch(async (req, res, next) => {
+exports.getAllProducts = catchAsync(async (req, res, next) => {
 
     const filterManager = new FilterManager(Product.find(), req.query)
         .filter()
@@ -32,11 +32,10 @@ exports.getAllProducts = catchAsynch(async (req, res, next) => {
 
     const {productList, paginate } = pagination.paginate(req,products);
 
-    let query = "";
-    productList.forEach(product =>
-        query = query + "_id-in[]=" + product._id + "&");
+    let productsIds = [];
+    productList.forEach(product => productsIds.push(product._id));
 
-    const baseProduct = await new StoreinoAPI(query).ApiCall();
+    const baseProduct = await Api.get('products','search',  { '_id-in':productsIds});
 
     const mergedList = MergeList(baseProduct,productList);
 
@@ -50,7 +49,7 @@ exports.getAllProducts = catchAsynch(async (req, res, next) => {
     });
 });
 
-exports.productInCategory = catchAsynch(async (req, res, next) => {
+exports.productInCategory = catchAsync(async (req, res, next) => {
     const category = req.params.slug;
     const regex = '^'+category;
 
@@ -67,11 +66,10 @@ exports.productInCategory = catchAsynch(async (req, res, next) => {
 
     const {productList, paginate } = pagination.paginate(req,products);
 
-    let query = "";
-    productList.forEach(product =>
-        query = query + "_id-in[]=" + product._id + "&");
+    let productsIds = [];
+    productList.forEach(product => productsIds.push(product._id));
 
-    const baseProduct = await new StoreinoAPI(query).ApiCall();
+    const baseProduct = await new Api.get('products', 'search', { '_id-in': productsIds});
 
     const mergedList = MergeList(baseProduct,products);
 
