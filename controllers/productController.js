@@ -78,3 +78,34 @@ exports.productInCategory = catchAsync(async (req, res, next) => {
         paginate
     });
 });
+
+exports.getOneProduct = catchAsync(async (req, res, next) => {
+    const id = req.params.id;
+
+    const filterManager = new FilterManager(Product.find({ "_id": id } ), req.query)
+        .filter()
+        .sort()
+        .limitFields();
+
+    const products = await filterManager.query;
+
+    if(products.length === 0) {
+        return next(new AppError("No product found",404));
+    }
+
+    const {productList, paginate } = pagination.paginate(req,products);
+
+    let productsIds = [];
+    productList.forEach(product => productsIds.push(product._id));
+
+    const response = await Api.get('products', 'search', { '_id-in': productsIds});
+
+    const baseProduct = response.data.results;
+
+    const mergedList = MergeList(baseProduct,products);
+
+    res.status(200).json({
+        result:  mergedList,
+        paginate
+    });
+});
