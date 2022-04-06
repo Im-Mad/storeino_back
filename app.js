@@ -12,6 +12,7 @@ const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
 const productRouter = require('./routes/productRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
+const orderRouter = require('./routes/orderRoutes');
 
 
 dotenv.config({ path: './config.env' });
@@ -86,6 +87,7 @@ app.use(xss());
 // 3) Routes
 app.use('/products', productRouter);
 app.use('/category', categoryRouter);
+app.use('/orders', orderRouter);
 
 
 app.all('*', (req, res, next) => {

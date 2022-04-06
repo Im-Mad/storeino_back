@@ -44,7 +44,7 @@ exports.placeOrder = catchAsynch(async (req, res, _next) => {
                 "address1": body.shipping.address.address1,
                 "country":body.shipping.address.country,
                 "province": body.shipping.address.province,
-                "city": body.shipping.address.city.name,
+                "city": body.shipping.address.city,
                 "firstname": body.customer.firstname,
                 "lastname": body.customer.lastname,
                 "phone": body.shipping.address.phone,
@@ -56,8 +56,7 @@ exports.placeOrder = catchAsynch(async (req, res, _next) => {
 
     console.log(data);
     console.log('now im here')
-    const response = await Api.post('orders', 'create', {...data});
-    console.log(response.data);
+    const response = await Api.post('orders', 'create', data);
     await Order.create({_id: response.data.result._id, customer:response.data.result.customer._id})
     res.status(200).json({
         _id: response.data.result._id,
