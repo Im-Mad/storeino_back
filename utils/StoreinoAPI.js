@@ -24,7 +24,6 @@ const get = async (model, action, params = {}) => {
         paramsSerializer: params => qs.stringify(params, {arrayFormat: 'brackets'}),
         headers
     });
-    return response.data.results;
 }
 
 /**
