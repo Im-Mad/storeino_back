@@ -82,30 +82,21 @@ exports.productInCategory = catchAsync(async (req, res, next) => {
 exports.getOneProduct = catchAsync(async (req, res, next) => {
     const id = req.params.id;
 
-    const filterManager = new FilterManager(Product.find({ "_id": id } ), req.query)
-        .filter()
-        .sort()
-        .limitFields();
+    const product = await Product.findOne({ "_id": id } );
 
-    const products = await filterManager.query;
 
-    if(products.length === 0) {
+    if(product == null) {
         return next(new AppError("No product found",404));
     }
 
-    const {productList, paginate } = pagination.paginate(req,products);
+    const response = await Api.get('products', 'get', { '_id': product._id});
 
-    let productsIds = [];
-    productList.forEach(product => productsIds.push(product._id));
+    const baseProduct = response.data;
 
-    const response = await Api.get('products', 'search', { '_id-in': productsIds});
 
-    const baseProduct = response.data.results;
-
-    const mergedList = MergeList(baseProduct,products);
+    const mergedProduct = { ...baseProduct, ...product._doc };
 
     res.status(200).json({
-        result:  mergedList,
-        paginate
+        result:  mergedProduct
     });
 });
