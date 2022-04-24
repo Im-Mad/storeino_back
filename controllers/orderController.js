@@ -8,7 +8,7 @@ exports.placeOrder = catchAsynch(async (req, res, _next) => {
         "firstname": body.customer.firstname,
         "lastname": body.customer.lastname,
         "email": body.customer.email,
-        "phone": body.shipping.address.phone,
+        "phone": body.customer.phone,
         "ipAddress": body.ipAddress,
         "address": {
             "address1": body.shipping.address.address1,
@@ -17,11 +17,9 @@ exports.placeOrder = catchAsynch(async (req, res, _next) => {
             "city": body.shipping.address.city,
             "firstname": body.customer.firstname,
             "lastname": body.customer.lastname,
-            "phone": body.shipping.address.phone,
+            "phone": body.customer.phone,
         }
     }
-
-
     const customerResponse = await Api.post('customers','create', customer);
     const id = customerResponse.data.customer._id;
 
@@ -46,14 +44,28 @@ exports.placeOrder = catchAsynch(async (req, res, _next) => {
                 "city": body.shipping.address.city,
                 "firstname": body.customer.firstname,
                 "lastname": body.customer.lastname,
-                "phone": body.shipping.address.phone,
-            }
+                "phone": body.customer.phone,
+            },
+            "shipper": {
+                _id: body.shipping.shipper._id,
+                name: body.shipping.shipper.name
+            },
+            zone: body.shipping.shipper.zone
         },
         "details":body.details,
-        "method": body.method
+        "method": {
+            _id: body.method._id
+        }
     };
-
-    const response = await Api.post('orders', 'create', data);
+    console.log('heeeeeeeeeeere')
+    console.log(data)
+    let response ;
+    try {
+    response = await Api.post('orders', 'create', data);
+    }catch (e){
+        console.log(e)
+    }
+    console.log(response)
     await Order.create({_id: response.data.result._id, customer:response.data.result.customer._id})
     res.status(200).json({
         result: response.data.result
