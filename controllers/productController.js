@@ -49,7 +49,14 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 
 exports.productInCategory = catchAsync(async (req, res, next) => {
     const category = req.params.slug;
-    const regex = '^'+category;
+    let regex;
+    console.log(category === 'all')
+    if(category === 'all') {
+        regex = '.*';
+    } else {
+        regex = '^'+category;
+    }
+
 
     const filterManager = new FilterManager(Product.find({ "categories.slug": { $regex: regex } } ), req.query)
         .filter()
