@@ -50,7 +50,6 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
 exports.productInCategory = catchAsync(async (req, res, next) => {
     const category = req.params.slug;
     let regex;
-    console.log(category === 'all')
     if(category === 'all') {
         regex = '.*';
     } else {
