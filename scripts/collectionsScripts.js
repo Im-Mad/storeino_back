@@ -110,16 +110,20 @@ const downloadData = async () => {
             postData.slug = category.parents +"2"+slugify(category.name, {lower: true} );
         }
 
-        console.log(query3)
-        console.log(postData)
-        axios.post(query3, postData, axiosConfig)
-            .then((res) => {
-                console.log("RESPONSE RECEIVED: ", res.data.slug);
-            })
-            .catch((err) => {
-                console.log("AXIOS ERROR: ");
-            })
+        console.log(result.slug);
+        console.log(query3);
+        console.log(postData);
 
+        if(result.slug !== postData.slug) {
+            axios.post(query3, postData, axiosConfig)
+              .then((res) => {
+                  console.log("RESPONSE RECEIVED: ", res.data.slug);
+              })
+              .catch((err) => {
+                  console.log("AXIOS ERROR: "+ err);
+                  return;
+              })
+        }
     }
     const data = JSON.stringify(categories, null, 4);
     await fs.writeFileSync(`${__dirname}/${writeFile}`, data, 'utf-8');

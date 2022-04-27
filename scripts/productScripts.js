@@ -64,6 +64,7 @@ const importData = async () => {
         console.log('Importation successfully');
         process.exit();
     } catch (err) {
+        console.log(product);
         console.log(err);
     }
 }

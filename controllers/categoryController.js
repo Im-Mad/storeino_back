@@ -1,15 +1,21 @@
 const catchAsynch = require('../utils/catchAsynch');
 const Category = require('../models/categoryModel');
 const AppError = require("../utils/AppError");
+const FilterManager = require("../utils/FilterManager");
+const Product = require("../models/productModel");
 
 exports.getAllCategories = catchAsynch(async (req, res, _next) => {
-    const categories = await Category.find();
+
+    const filterManager = new FilterManager(Category.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields();
+
+    const categories = await filterManager.query;
 
     res.status(201).json({
         status: 'success',
-        data: {
-            categories,
-        },
+        result: categories,
     });
 });
 

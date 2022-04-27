@@ -73,5 +73,127 @@
     {
         "name": "Shoes",
         "parents": "fashion2women-fashion"
+    },
+    {
+        "name": "Informatique"
+    },
+    {
+        "name": "computer",
+        "parents": "informatique"
+    },
+    {
+        "name": "Storage",
+        "parents": "informatique"
+    },
+    {
+        "name": "Network",
+        "parents": "informatique"
+    },
+    {
+        "name": "Computer Parts",
+        "parents": "informatique"
+    },
+    {
+        "name": "Accessories",
+        "parents": "informatique"
+    },
+    {
+        "name": "Sport & Fitness"
+    },
+    {
+        "name": "Bikes & Cycling",
+        "parents": "sport-and-fitness"
+    },
+    {
+        "name": "Hike & Camping",
+        "parents": "sport-and-fitness"
+    },
+    {
+        "name": "Exercices & Fitness",
+        "parents": "sport-and-fitness"
+    },
+    {
+        "name": "Water Sport",
+        "parents": "sport-and-fitness"
+    },
+    {
+        "name": "Kayaking",
+        "parents": "sport-and-fitness"
+    },
+    {
+        "name": "Surfing",
+        "parents": "sport-and-fitness"
+    },
+    {
+        "name": "Swimming",
+        "parents": "sport-and-fitness"
+    },
+    {
+        "name": "Sailing",
+        "parents": "sport-and-fitness"
+    },
+    {
+        "name": "Beach",
+        "parents": "sport-and-fitness"
+    },
+    {
+        "name": "Weight Training",
+        "parents": "sport-and-fitness2exercices-and-fitness"
+    },
+    {
+        "name": "Home & Gym Equipement",
+        "parents": "sport-and-fitness2exercices-and-fitness"
+    },
+    {
+        "name": "Cardio Machines",
+        "parents": "sport-and-fitness2exercices-and-fitness"
+    },
+    {
+        "name": "Fitness Accessories",
+        "parents": "sport-and-fitness2exercices-and-fitness"
+    },
+    {
+        "name": "Yoga",
+        "parents": "sport-and-fitness2exercices-and-fitness"
+    },
+    {
+        "name": "Boxing MMA",
+        "parents": "sport-and-fitness2exercices-and-fitness"
+    },
+    {
+        "name": "Laptop",
+        "parents": "informatique2computer"
+    },
+    {
+        "name": "External & Internal SSD",
+        "parents": "informatique2storage"
+    },
+    {
+        "name": "T-shirts",
+        "parents": "fashion2men-fashion"
+    },
+    {
+        "name": "Other",
+        "parents": "informatique"
+    },
+    {
+        "name": "playstation",
+        "parents": "informatique2other"
+    },
+    {
+        "name": "Printers",
+        "parents": "informatique2other"
+    },
+    {
+        "name": "X-box",
+        "parents": "informatique2other"
+    },
+    {
+        "name": "Tablets",
+        "parents": "informatique2other"
+    },
+    {
+        "name": "Phones",
+        "parents": "informatique2other"
     }
 ]
