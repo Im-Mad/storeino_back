@@ -13,6 +13,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const productRouter = require('./routes/productRoutes');
 const categoryRouter = require('./routes/categoryRoutes');
 const orderRouter = require('./routes/orderRoutes');
+const authRouter = require('./routes/authRoutes')
 const locationRouter = require('./routes/LocationRoutes')
 
 
@@ -89,6 +90,7 @@ app.use(xss());
 app.use('/products', productRouter);
 app.use('/category', categoryRouter);
 app.use('/orders', orderRouter);
+app.use('/auth', authRouter);
 app.use('', locationRouter);
 
 
