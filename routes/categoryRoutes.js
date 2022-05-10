@@ -12,9 +12,7 @@ router
 
 router
   .route('/:slug')
-  .get(categoryController.getCategory)
-  .use(authController.protect)
-  .delete(categoryController.deleteCategory);
+  .get(categoryController.getCategory);
 
 router
   .route('/:slug/products')
@@ -23,9 +21,11 @@ router
 router
   .route('/')
   .get(categoryController.getAllCategories)
-  .use(authController.protect)
-  .post(categoryController.createCategory);
 
+router.use(authController.protect);
+
+router.post('/',categoryController.createCategory);
+router.delete('/:slug', categoryController.deleteCategory);
 
 
 module.exports = router;

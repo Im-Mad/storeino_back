@@ -10,8 +10,13 @@ router
 
 router
   .route('/')
-  .get(productController.getAllProducts)
+  .get(productController.getAllProducts);
+
+router
   .use(authController.protect)
+
+router
+  .route('/')
   .post(productController.createProduct);
 
 module.exports = router;
