@@ -30,16 +30,16 @@ exports.getAllProducts = catchAsync(async (req, res, next) => {
         return next(new AppError("No product found",404));
     }
 
-    const {productList, paginate } = pagination.paginate(req,products);
+    const {list, paginate } = pagination.paginate(req,products);
 
     let productsIds = [];
-    productList.forEach(product => productsIds.push(product._id));
+    list.forEach(product => productsIds.push(product._id));
 
     const response = await Api.get('products','search',  { '_id-in':productsIds});
 
     const baseProduct = response.data.results;
 
-    const mergedList = MergeList(baseProduct,productList);
+    const mergedList = MergeList(baseProduct,list);
 
     res.status(200).json({
         result: mergedList,
@@ -68,10 +68,10 @@ exports.productInCategory = catchAsync(async (req, res, next) => {
         return next(new AppError("No product found",404));
     }
 
-    const {productList, paginate } = pagination.paginate(req,products);
+    const {list, paginate } = pagination.paginate(req,products);
 
     let productsIds = [];
-    productList.forEach(product => productsIds.push(product._id));
+    list.forEach(product => productsIds.push(product._id));
 
     const response = await Api.get('products', 'search', { '_id-in': productsIds});
 

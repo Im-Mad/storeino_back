@@ -9,7 +9,11 @@ const headers = {
     'Access-Control-Allow-Headers' : 'Content-type, X-Auth-Token, Authorization, Origin'
 };
 
-const adminHeaders = {...headers, 'x-auth-token': process.env.STOREINO_ADMIN_TOKEN};
+const adminHeaders = {
+    'Access-Control-Allow-Headers' : 'Content-type, X-Auth-Token, Authorization, Origin',
+    'Access-Control-Allow-Origin' : '*',
+    'x-auth-token': process.env.STOREINO_ADMIN_TOKEN
+};
 
 const baseUrl = "https://api-stores.storeino.com/api/";
 
@@ -47,11 +51,12 @@ const post = async (model, action, data ) => {
  */
 const adminGet = async (model, action, params = {}) => {
     const query = baseUrl + model + '/' + action;
-    return await axios.get(query, {
+    const response = await axios.get(query, {
         params,
         paramsSerializer: params => qs.stringify(params, {arrayFormat: 'brackets'}),
-        adminHeaders
+        headers:adminHeaders
     });
+    return response;
 }
 
 /**
@@ -62,7 +67,7 @@ const adminGet = async (model, action, params = {}) => {
 const adminPost = async (model, action, data ) => {
     const query = baseUrl +  model + '/' + action;
     const response = await axios.post(query, data,{
-        adminHeaders
+        headers:adminHeaders
     });
     return response;
 }
