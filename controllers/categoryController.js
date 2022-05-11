@@ -46,7 +46,7 @@ exports.deleteCategory = catchAsynch(async (req, res, next) => {
         await Category.updateMany(filter, update);
     }
 
-    res.status(202).send();
+    res.status(204).send();
 });
 
 exports.rootCategories = catchAsynch(async (req, res, _next) => {
