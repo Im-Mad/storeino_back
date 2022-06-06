@@ -2,7 +2,6 @@ const catchAsynch = require('../utils/catchAsynch');
 const Category = require('../models/categoryModel');
 const AppError = require("../utils/AppError");
 const FilterManager = require("../utils/FilterManager");
-const Product = require("../models/productModel");
 
 exports.getAllCategories = catchAsynch(async (req, res, _next) => {
 
@@ -13,8 +12,7 @@ exports.getAllCategories = catchAsynch(async (req, res, _next) => {
 
     const categories = await filterManager.query;
 
-    res.status(201).json({
-        status: 'success',
+    res.status(200).json({
         result: categories,
     });
 });
@@ -30,7 +28,7 @@ exports.createCategory = catchAsynch(async (req, res, _next) => {
 exports.getCategory = catchAsynch(async (req, res, _next) => {
     const category = await Category.find({ slug: req.params.slug });
 
-    res.status(201).json({
+    res.status(200).json({
         result: category,
     });
 });
@@ -48,15 +46,13 @@ exports.deleteCategory = catchAsynch(async (req, res, next) => {
         await Category.updateMany(filter, update);
     }
 
-    res.status(202).json({
-        status: 'success'
-    });
+    res.status(204).send();
 });
 
 exports.rootCategories = catchAsynch(async (req, res, _next) => {
     const categories = await Category.find({ level: 1 });
 
-    res.status(201).json({
+    res.status(200).json({
         result: categories,
     });
 });
