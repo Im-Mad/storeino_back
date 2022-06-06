@@ -16,6 +16,7 @@ const orderRouter = require('./routes/orderRoutes');
 const authRouter = require('./routes/authRoutes')
 const configRouter = require('./routes/configRoutes')
 const locationRouter = require('./routes/LocationRoutes')
+const cors = require("cors");
 
 
 dotenv.config({ path: './config.env' });
@@ -31,6 +32,8 @@ app.use(helmet());
 
 // dev mode
 app.use(morgan('dev'));
+
+app.use(cors());
 
 // Allow access control allow origin
 app.use(function (req, res, next) {
