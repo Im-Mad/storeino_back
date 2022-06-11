@@ -42,7 +42,7 @@ const handleCastErrorDB = (err) => {
 const handleDuplicateFieldsDB = (err) => {
   const value = Object.keys(err.keyValue)[0];
   const message = `Duplicate field value : ${value}. Please change it.`;
-  return new AppError(message, 400);
+  return new AppError(message, 409);
 };
 
 const handleValidationErrorDB = (err) => {

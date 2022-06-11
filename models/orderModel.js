@@ -19,6 +19,10 @@ const orderSchema = new mongoose.Schema({
         required: [true, 'Customer must have an id'],
         trim: true
     },
+    date: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 module.exports = mongoose.model('Order', orderSchema);

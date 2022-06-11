@@ -16,6 +16,7 @@ const orderRouter = require('./routes/orderRoutes');
 const authRouter = require('./routes/authRoutes')
 const configRouter = require('./routes/configRoutes')
 const locationRouter = require('./routes/LocationRoutes')
+const cors = require("cors");
 
 
 dotenv.config({ path: './config.env' });
@@ -32,16 +33,18 @@ app.use(helmet());
 // dev mode
 app.use(morgan('dev'));
 
+app.use(cors());
+
 // Allow access control allow origin
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4002');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Methods', '*');
 
     // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', '*');
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -60,10 +63,9 @@ const limiter = rateLimit({
 });
 
 app.use('/', limiter); // affect route that start in api only
-
 // Body parser, reading data from body into req.body
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' })); // to get access to data from form in req.body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true})); // to get access to data from form in req.body
 app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection

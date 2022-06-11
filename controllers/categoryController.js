@@ -2,6 +2,9 @@ const catchAsynch = require('../utils/catchAsynch');
 const Category = require('../models/categoryModel');
 const AppError = require("../utils/AppError");
 const FilterManager = require("../utils/FilterManager");
+const pagination = require("../utils/pagination");
+const Config = require("../models/configModel");
+const Api = require("../utils/StoreinoAPI");
 
 exports.getAllCategories = catchAsynch(async (req, res, _next) => {
 
@@ -11,14 +14,24 @@ exports.getAllCategories = catchAsynch(async (req, res, _next) => {
       .limitFields();
 
     const categories = await filterManager.query;
-
+    const {list, paginate } = pagination.paginate(req,categories);
     res.status(200).json({
-        result: categories,
+        result: list,
+        paginate
     });
 });
 
 exports.createCategory = catchAsynch(async (req, res, _next) => {
+    if (req.body.banner){
+        const response = await Api.adminPost('images','create',  {
+            src: req.body.banner
+        });
+        req.body.banner = response.data.src;
+    }
+    console.log(req.body);
     const category = await Category.create(req.body);
+
+    console.log(category);
 
     res.status(201).json({
         result: category,
@@ -26,11 +39,14 @@ exports.createCategory = catchAsynch(async (req, res, _next) => {
 });
 
 exports.getCategory = catchAsynch(async (req, res, _next) => {
-    const category = await Category.find({ slug: req.params.slug });
+    const category = await Category.findOne({ slug: req.params.slug });
 
-    res.status(200).json({
-        result: category,
-    });
+    if (!category)
+        res.status(404).send();
+    else
+        res.status(200).json({
+            result: category,
+        });
 });
 
 exports.deleteCategory = catchAsynch(async (req, res, next) => {
@@ -42,7 +58,7 @@ exports.deleteCategory = catchAsynch(async (req, res, next) => {
 
     if(category.level > 0) {
         const filter = { slug: category.parents[category.parents.length -1].slug };
-        const update = { $pull: { childrens: { slug: category.slug, name: category.name } } };
+        const update = { $pull: { children: { slug: category.slug, name: category.name } } };
         await Category.updateMany(filter, update);
     }
 
@@ -55,4 +71,27 @@ exports.rootCategories = catchAsynch(async (req, res, _next) => {
     res.status(200).json({
         result: categories,
     });
+});
+
+exports.editCategory = catchAsynch(async (req, res, _next) => {
+    const update = {};
+    if (req.body.parent)
+        update.parents = req.body.parent;
+    if (req.body.name)
+        update.name = req.body.name;
+    if (req.body.banner){
+        const response = await Api.adminPost('images','create',  {
+            src: req.body.banner
+        });
+        update.banner = response.data.src;
+    }
+
+    console.log(update);
+
+    await Category.updateOne(
+      {slug: req.params.slug},
+      [{$set: {...update}}]
+    );
+
+    res.status(200).send();
 });

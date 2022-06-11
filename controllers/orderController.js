@@ -75,7 +75,7 @@ exports.placeOrder = catchAsync(async (req, res, _next) => {
 exports.getAllOrders = catchAsync(async (req, res, _next) => {
 
     const filterManager = new FilterManager(Order.find(), req.query)
-      .filter();
+      .filter().sort({date: -1});
 
     const orders = await filterManager.query;
 
