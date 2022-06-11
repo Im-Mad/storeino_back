@@ -56,36 +56,36 @@ categorySchema.pre('save', async function(next) {
     next();
   }
 );
-categorySchema.pre('updateOne', async function(next) {
-    const query = this.getQuery();
-    const update = this.getUpdate()[0]['$set'];
-    console.log(update);
-    if(update.parents) {
-      update.slug = slugify(update.parents + ":" + update.name, {lower: true});
-      const filter = {slug: update.parents, 'children.slug': { $ne: this.slug }};
-      const updateParents = {$addToSet: { children: {slug: this.slug, name: this.name} }};
-      const parent = await Category.findOneAndUpdate(filter, updateParents);
-      if (!parent) return next(new AppError('No such parent category', 404));
-      update.parents = parent.parents;
-      update.parents.push(
-        {
-          name: parent.name,
-          slug: parent.slug
-        }
-      );
-      update.level = update.parents.length;
-    } else {
-      const category = await Category.findOne(query);
-      const slug = slugify(update.name, {lower: true});
-      if (!category) return next(new AppError('No such category', 404));
-      if (category.slug.includes(':'))
-        update.slug = [category.slug.split(':').slice(0,-1), slug].join(':');
-      else
-        update.slug = slug;
-    }
-      this.setUpdate({ $set: update})
-    next();
-  });
+// categorySchema.pre('updateOne', async function(next) {
+//     const query = this.getQuery();
+//     const update = this.getUpdate()[0]['$set'];
+//     console.log(update);
+//     if(update.parents) {
+//       update.slug = slugify(update.parents + ":" + update.name, {lower: true});
+//       const filter = {slug: update.parents, 'children.slug': { $ne: this.slug }};
+//       const updateParents = {$addToSet: { children: {slug: this.slug, name: this.name} }};
+//       const parent = await Category.findOneAndUpdate(filter, updateParents);
+//       if (!parent) return next(new AppError('No such parent category', 404));
+//       update.parents = parent.parents;
+//       update.parents.push(
+//         {
+//           name: parent.name,
+//           slug: parent.slug
+//         }
+//       );
+//       update.level = update.parents.length;
+//     } else {
+//       const category = await Category.findOne(query);
+//       const slug = slugify(update.name, {lower: true});
+//       if (!category) return next(new AppError('No such category', 404));
+//       if (category.slug.includes(':'))
+//         update.slug = [category.slug.split(':').slice(0,-1), slug].join(':');
+//       else
+//         update.slug = slug;
+//     }
+//       this.setUpdate({ $set: update})
+//     next();
+//   });
 
 const Category = mongoose.model('Category', categorySchema);
 
