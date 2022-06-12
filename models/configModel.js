@@ -5,6 +5,6 @@ const configSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-}, {strict: false, capped: {max: 3}});
+}, {strict: false, capped: {max: 4}});
 
 module.exports = mongoose.model('Config', configSchema);

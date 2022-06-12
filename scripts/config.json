@@ -34,7 +34,35 @@
   },
   {
     "type": "top",
-    "top": []
+    "top": [
+      {
+      "name": "fashion",
+      "slug": "fashion"
+    },{
+      "name":"informatique",
+      "slug":"informatique"
+    },
+      {
+        "name":"sport-and-fitness",
+        "slug":"sport-and-fitness"
+      }
+    ]
+  },
+  {
+    "type": "featured",
+    "featured": [
+      {
+        "name": "fashion",
+        "slug": "fashion"
+      },{
+        "name":"informatique",
+        "slug":"informatique"
+      },
+      {
+        "name":"Sport And Fitness",
+        "slug":"sport-and-fitness"
+      }
+    ]
   }
 
 

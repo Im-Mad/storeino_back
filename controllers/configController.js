@@ -32,6 +32,16 @@ exports.getTopCategories = catchAsynch(async (req, res, _next) => {
   });
 });
 
+exports.getFeaturedCategories = catchAsynch(async (req, res, _next) => {
+  const featuredCat = await Config.findOne({type: 'featured'});
+  if(featuredCat === null) {
+    return _next(new AppError("Featured categories not found", 404));
+  }
+  res.status(200).json({
+    results: featuredCat
+  });
+});
+
 exports.editSlides = catchAsynch(async (req, res, _next) => {
   const {slide} = req.body;
   let slides = await Config.findOne({type: 'slides'});
@@ -71,6 +81,18 @@ exports.editTopCategories = catchAsynch(async (req, res, _next) => {
   await Config.updateOne(
     {type: 'top'},
     [{$set: {top}}]
+  );
+
+  res.status(204).send();
+});
+
+
+exports.editFeaturedCategories = catchAsynch(async (req, res, _next) => {
+  const {featured} = req.body;
+
+  await Config.updateOne(
+    {type: 'featured'},
+    [{$set: {featured}}]
   );
 
   res.status(204).send();
