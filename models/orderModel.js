@@ -15,9 +15,8 @@ const orderSchema = new mongoose.Schema({
         trim: true
     },
     customer: {
-        type: String,
-        required: [true, 'Customer must have an id'],
-        trim: true
+        type: Object,
+        required: true
     },
     date: {
         type: Date,

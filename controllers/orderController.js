@@ -66,7 +66,7 @@ exports.placeOrder = catchAsync(async (req, res, _next) => {
     }catch (e){
         console.log(e)
     }
-    await Order.create({_id: response.data.result._id, customer:response.data.result.customer._id})
+    await Order.create({_id: response.data.result._id, customer:response.data.result.customer})
     res.status(200).json({
         result: response.data.result
     })
