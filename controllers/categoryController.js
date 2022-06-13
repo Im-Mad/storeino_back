@@ -28,10 +28,8 @@ exports.createCategory = catchAsynch(async (req, res, _next) => {
         });
         req.body.banner = response.data.src;
     }
-    console.log(req.body);
     const category = await Category.create(req.body);
 
-    console.log(category);
 
     res.status(201).json({
         result: category,
@@ -52,7 +50,6 @@ exports.getCategory = catchAsynch(async (req, res, _next) => {
 exports.deleteCategory = catchAsynch(async (req, res, next) => {
     const category = await Category.findOne({ slug: req.params.slug });
     if(!category) return next(new AppError("No category found",404));
-    console.log(category);
     if(category.children.length > 0) return next(new AppError("Category has children, cannot delete",404));
     await category.delete();
 
@@ -86,7 +83,6 @@ exports.editCategory = catchAsynch(async (req, res, _next) => {
         update.banner = response.data.src;
     }
 
-    console.log(update);
 
     await Category.updateOne(
       {slug: req.params.slug},

@@ -36,15 +36,46 @@
     "type": "top",
     "top": [
       {
-      "name": "fashion",
-      "slug": "fashion"
-    },{
-      "name":"informatique",
-      "slug":"informatique"
-    },
+        "name": "fashion",
+        "slug": "fashion"
+      },
       {
-        "name":"sport-and-fitness",
-        "slug":"sport-and-fitness"
+        "name": "informatique",
+        "slug": "informatique"
+      },
+      {
+        "parents": [
+          {
+            "name": "Fashion",
+            "slug": "fashion"
+          }
+        ],
+        "children": [
+          {
+            "slug": "fashion:kids-fashion:bottoms",
+            "name": "Bottoms"
+          },
+          {
+            "slug": "fashion:kids-fashion:outerwears-and-jackets",
+            "name": "Outerwears and Jackets"
+          },
+          {
+            "slug": "fashion:kids-fashion:accessories",
+            "name": "Accessories"
+          },
+          {
+            "slug": "fashion:kids-fashion:underwears",
+            "name": "Underwears"
+          },
+          {
+            "slug": "fashion:kids-fashion:shoes",
+            "name": "Shoes"
+          }
+        ],
+        "_id": "62a49910958aa634e7c6c5e7",
+        "name": "Kids Fashion",
+        "slug": "fashion:kids-fashion",
+        "level": 1
       }
     ]
   },
@@ -52,18 +83,63 @@
     "type": "featured",
     "featured": [
       {
-        "name": "fashion",
-        "slug": "fashion"
-      },{
-        "name":"informatique",
-        "slug":"informatique"
+        "parents": [],
+        "children": [
+          {
+            "slug": "fashion:women-fashion",
+            "name": "Women Fashion"
+          },
+          {
+            "slug": "fashion:men-fashion",
+            "name": "Men Fashion"
+          },
+          {
+            "slug": "fashion:kids-fashion",
+            "name": "Kids Fashion"
+          }
+        ],
+        "_id": "62a4990a958aa634e7c6c5dd",
+        "name": "Fashion",
+        "slug": "fashion",
+        "level": 0,
+        "banner": "https://storeno.b-cdn.net/stores/6-2022/1654988278379.jpeg",
+        "img": "https://storeno.b-cdn.net/stores/6-2022/1654991604715.png"
       },
       {
-        "name":"Sport And Fitness",
-        "slug":"sport-and-fitness"
+        "parents": [],
+        "children": [
+          {
+            "slug": "informatique:computer",
+            "name": "computer"
+          },
+          {
+            "slug": "informatique:storage",
+            "name": "Storage"
+          },
+          {
+            "slug": "informatique:network",
+            "name": "Network"
+          },
+          {
+            "slug": "informatique:computer-parts",
+            "name": "Computer Parts"
+          },
+          {
+            "slug": "informatique:accessories",
+            "name": "Accessories"
+          },
+          {
+            "slug": "informatique:other",
+            "name": "Other"
+          }
+        ],
+        "_id": "62a49918958aa634e7c6c617",
+        "name": "Informatique",
+        "slug": "informatique",
+        "level": 0,
+        "banner": "https://storeno.b-cdn.net/stores/6-2022/1654988984943.jpeg",
+        "img": "https://storeno.b-cdn.net/stores/6-2022/1654991604729.png"
       }
     ]
   }
-
-
 ]

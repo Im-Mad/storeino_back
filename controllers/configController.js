@@ -1,8 +1,9 @@
-const catchAsynch = require('../utils/catchAsynch');
+const catchAsync = require('../utils/catchAsynch');
 const Config = require('../models/configModel')
 const AppError = require("../utils/AppError");
+const Api = require("../utils/StoreinoAPI");
 
-exports.getSlides = catchAsynch(async (req, res, _next) => {
+exports.getSlides = catchAsync(async (req, res, _next) => {
   const slides = await Config.findOne({type: 'slides'});
   if(slides === null) {
     return _next(new AppError("Slides not found", 404));
@@ -12,7 +13,7 @@ exports.getSlides = catchAsynch(async (req, res, _next) => {
   });
 });
 
-exports.getBanner = catchAsynch(async (req, res, _next) => {
+exports.getBanner = catchAsync(async (req, res, _next) => {
   const banner = await Config.findOne({type: 'banner'});
   if(banner === null) {
     return _next(new AppError("Banner not found", 404));
@@ -22,7 +23,7 @@ exports.getBanner = catchAsynch(async (req, res, _next) => {
   });
 });
 
-exports.getTopCategories = catchAsynch(async (req, res, _next) => {
+exports.getTopCategories = catchAsync(async (req, res, _next) => {
   const topCat = await Config.findOne({type: 'top'});
   if(topCat === null) {
     return _next(new AppError("Top categories not found", 404));
@@ -32,7 +33,7 @@ exports.getTopCategories = catchAsynch(async (req, res, _next) => {
   });
 });
 
-exports.getFeaturedCategories = catchAsynch(async (req, res, _next) => {
+exports.getFeaturedCategories = catchAsync(async (req, res, _next) => {
   const featuredCat = await Config.findOne({type: 'featured'});
   if(featuredCat === null) {
     return _next(new AppError("Featured categories not found", 404));
@@ -42,29 +43,46 @@ exports.getFeaturedCategories = catchAsynch(async (req, res, _next) => {
   });
 });
 
-exports.editSlides = catchAsynch(async (req, res, _next) => {
-  const {slide} = req.body;
-  let slides = await Config.findOne({type: 'slides'});
-  if(slides === null) {
-    return _next(new AppError("Slides not found", 404));
+exports.editSlides = catchAsync(async (req, res, _next) => {
+  const {slide, imgChanged} = req.body;
+  if (imgChanged){
+    const response = await Api.adminPost('images','create',  {
+      src: slide.image
+    });
+    slide.image = response.data.src;
   }
-
+  const resp = await Config.findOne({type: 'slides'});
+  let slides = resp._doc.slides;
+  if(!slides) {
+    res.status(500).json({
+      error: "fuck bro"
+    });
+  }
+else
   slides = slides.map( item => {
     if(slide._id === item._id)
       return slide;
     return item;
   });
 
-  await Config.updateOne(
+  console.log(slides);
+  const respo = Config.updateOne(
     {type: 'slides'},
     [{$set: {slides}}]
-  );
+  ).catch(err => console.log(resp));
 
   res.status(204).send();
 });
 
-exports.editBanner = catchAsynch(async (req, res, _next) => {
+exports.editBanner = catchAsync(async (req, res, _next) => {
+
   const {banner} = req.body;
+  if (banner.image){
+    const response = await Api.adminPost('images','create',  {
+      src: banner.image
+    });
+    banner.image = response.data.src;
+  }
 
   await Config.updateOne(
     {type: 'banner'},
@@ -75,7 +93,7 @@ exports.editBanner = catchAsynch(async (req, res, _next) => {
 });
 
 
-exports.editTopCategories = catchAsynch(async (req, res, _next) => {
+exports.editTopCategories = catchAsync(async (req, res, _next) => {
   const {top} = req.body;
 
   await Config.updateOne(
@@ -87,7 +105,7 @@ exports.editTopCategories = catchAsynch(async (req, res, _next) => {
 });
 
 
-exports.editFeaturedCategories = catchAsynch(async (req, res, _next) => {
+exports.editFeaturedCategories = catchAsync(async (req, res, _next) => {
   const {featured} = req.body;
 
   await Config.updateOne(
