@@ -5,6 +5,7 @@ const FilterManager = require("../utils/FilterManager");
 const AppError = require("../utils/AppError");
 const pagination = require("../utils/pagination");
 const MergeList = require("../utils/MergeList");
+const Product = require("../models/productModel");
 
 exports.placeOrder = catchAsync(async (req, res, _next) => {
     const body = req.body;
@@ -99,3 +100,30 @@ exports.getAllOrders = catchAsync(async (req, res, _next) => {
         paginate
     });
 });
+
+exports.getOrder = catchAsync(async (req, res, _next) => {
+
+    const orderId = req.params.id;
+
+    Api.adminGet('orders', 'get', {orderId})
+      .catch(err => {
+          console.log(err);
+          res.status(404).send();
+      }).then(response => {
+        const result = {
+            customer : {
+                firstname: response.data.customer.firstname,
+                lastname: response.data.customer.lastname
+            },
+            total: response.data.total,
+            createdAt: response.data.createdAt,
+            status: response.data.status
+        };
+        console.log(result);
+        res.status(200).json({
+            result
+        });
+      });
+
+});
+

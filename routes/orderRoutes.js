@@ -10,5 +10,6 @@ router
 
 router.use(authController.protect);
 
+router.get('/:id', orderController.getOrder);
 router.get('/', orderController.getAllOrders);
 module.exports = router;
