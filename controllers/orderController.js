@@ -5,7 +5,6 @@ const FilterManager = require("../utils/FilterManager");
 const AppError = require("../utils/AppError");
 const pagination = require("../utils/pagination");
 const MergeList = require("../utils/MergeList");
-const Product = require("../models/productModel");
 
 exports.placeOrder = catchAsync(async (req, res, _next) => {
     const body = req.body;
@@ -81,7 +80,7 @@ exports.getAllOrders = catchAsync(async (req, res, _next) => {
     const orders = await filterManager.query;
 
     if(orders.length === 0) {
-        return next(new AppError("No order found",404));
+        return _next(new AppError("No order found",404));
     }
 
     const {list, paginate } = pagination.paginate(req,orders);

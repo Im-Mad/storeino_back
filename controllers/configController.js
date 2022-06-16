@@ -77,6 +77,7 @@ else
 exports.editBanner = catchAsync(async (req, res, _next) => {
 
   const {banner} = req.body;
+  console.log(banner);
   if (banner.image){
     const response = await Api.adminPost('images','create',  {
       src: banner.image
