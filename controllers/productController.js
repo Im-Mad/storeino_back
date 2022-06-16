@@ -62,11 +62,13 @@ exports.productInCategory = catchAsync(async (req, res, next) => {
         .sort()
         .limitFields();
 
-    const products = await filterManager.query;
+    let products = await filterManager.query;
 
     if(products.length === 0) {
         return next(new AppError("No product found",404));
     }
+
+    products = products.sort( ()  => Math.random() - 0.5 );
 
     const {list, paginate } = pagination.paginate(req,products);
 
