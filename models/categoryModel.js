@@ -24,7 +24,8 @@ const categorySchema = new mongoose.Schema(
         level: {
             type: Number,
         },
-      banner: String,
+        banner: String,
+        img : String,
     },
     {
         versionKey: false

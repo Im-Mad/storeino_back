@@ -83,11 +83,11 @@ exports.editCategory = catchAsynch(async (req, res, _next) => {
         update.banner = response.data.src;
     }
 
-    if (req.body.image){
+    if (req.body.img){
         const response = await Api.adminPost('images','create',  {
-            src: req.body.image
+            src: req.body.img
         });
-        update.image = response.data.src;
+        update.img = response.data.src;
     }
 
     await Category.updateOne(
